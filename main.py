@@ -45,7 +45,7 @@ print(np.unique(y_train, return_counts=True), np.unique(y_test, return_counts=Tr
 
 print("x_train shape:", X_train.shape)
 print(X_train.shape[0], "train samples")
-print(X_train.shape[0], "test samples")
+print(X_test.shape[0], "test samples")
 
 y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
