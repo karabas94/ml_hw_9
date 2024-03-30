@@ -26,7 +26,7 @@ def input_target_split(train_dir, labels):
     for label in labels:
         folder = os.path.join(train_dir, label)
         for image in os.listdir(folder):
-            img = preprocessing.image.load_img(os.path.join(folder, image), target_size=(224, 224))
+            img = preprocessing.image.load_img(os.path.join(folder, image), target_size=(150, 150))
             img = preprocessing.image.img_to_array(img)
             img = applications.resnet.preprocess_input(img)
             dataset.append((img, count))
@@ -50,7 +50,7 @@ print(X_test.shape[0], "test samples")
 y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
 
-input_shape = (224, 224, 3)
+input_shape = (150, 150, 3)
 
 # download trained model
 vgg_model = applications.ResNet50(input_shape=input_shape, include_top=False, weights='imagenet')
@@ -61,6 +61,7 @@ vgg_model.trainable = False
 # added several layers
 model = keras.Sequential(
     [
+        keras.Input(shape=input_shape),
         vgg_model,
         layers.Flatten(),
         layers.Dense(128, activation='relu'),
